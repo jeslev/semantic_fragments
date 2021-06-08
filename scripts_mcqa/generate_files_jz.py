@@ -10,12 +10,12 @@ slurm_template_train = """#!/bin/bash
 #SBATCH --error={job_name}.err
 
 #SBATCH --ntasks=1 
-##SBATCH --cpus-per-task=3
-#SBATCH --cpus-per-task=10
-##SBATCH --partition=gpu_p2 
+#SBATCH --cpus-per-task=3
+##SBATCH --cpus-per-task=10
+#SBATCH --partition=gpu_p2 
 #SBATCH --gres=gpu:1
-#SBATCH --time=02:00:00
-##SBATCH --time=20:00:00
+##SBATCH --time=02:00:00
+#SBATCH --time=20:00:00
 
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=jesus.lovon@irit.fr
@@ -72,11 +72,26 @@ done
 
 
 base_train = "$WORK/data/_generated/"
-_path_script = "/home/jeslev/These/software/semantic_fragments/scripts_mcqa"
+_path_script = "/gpfswork/rech/evd/uwe77wt/semantic_fragments/scripts_mcqa"
+
 configs = {
-    "configname": base_train + "phat/model.tar.gz",
+    "rob_raw": "", #rob_raw
+    #"35k.s1.e1.o1.t1": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s1.e1.o1.t1/lot_exp/model/model.tar.gz", #rob neurips
+    #sh2_rnd
+    "35k.s3.e3.o1.t1.sh2": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s3.e3.o1.t1/sh2_rnd/model/model.tar.gz",
+    "35k.s3.e3.o1.t3.sh2": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s3.e3.o1.t3/sh2_rnd/model/model.tar.gz",
+    "35k.s1.e1.o1.t1.sh2": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s1.e1.o1.t1/sh2_rnd/model/model.tar.gz",
+    #sh3_rnd_t 
+    "35k.s1.e4.o2.t1.sh3t.p7": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s1.e4.o2.t1/sh3_rnd_t/p7/model/model.tar.gz", # p7
+    "35k.s3.e1.o1.t1.sh3t.p7": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s3.e1.o1.t1/sh3_rnd_t/p7/model/model.tar.gz",# -> p7
+    "35k.s1.e1.o1.t1.sh3t.p3": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s1.e1.o1.t1/sh3_rnd_t/p3/model/model.tar.gz",#
+    "35k.s1.e1.o1.t1.sh3t.p6": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/35k.s1.e1.o1.t1/sh3_rnd_t/p6/model/model.tar.gz",#-> p3, p6
 }
 
+configs = {
+    "s1.e1.o1.t1.sh2": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/all.s1.e1.o1.t1/sh2_rnd/model/model.tar.gz",
+    "s1.e1.o1.t1.sh3t.p3": "/gpfsscratch/rech/evd/uwe77wt/neurips/roberta-large/all.s1.e1.o1.t1/sh3_rnd_t/p3/model/model.tar.gz",
+}
 
 def create_script_training(config_name, model):
     global train_path, valid_path, model_name, slurm_template_train, slurm_static
